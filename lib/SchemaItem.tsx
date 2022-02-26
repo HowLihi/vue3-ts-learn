@@ -54,5 +54,5 @@ export default defineComponent({
 
       return <Component {...props} schema={retrievedSchema} />;
     };
-  },
+  }
 });
