@@ -1,19 +1,19 @@
-const Ajv = require('ajv')
+const Ajv = require("ajv");
 
-const ajv = new Ajv()
+const ajv = new Ajv();
 
 const validate = ajv.compile({
-  type: 'object',
+  type: "object",
   properties: {
     select: {
-      type: 'number',
+      type: "number",
       minimum: 10,
     },
   },
-})
+});
 
 const r = validate({
   select: 5,
-})
+});
 
-console.log(r)
+console.log(r);

@@ -1,16 +1,16 @@
-import { defineComponent, h } from 'vue'
+import { defineComponent, h } from "vue";
 
-import SchemaFrom from './SchemaForm'
-import NumberFiled from './fields/NumberField'
-import StringField from './fields/StringField'
-import ArrayField from './fields/ArrayField'
+import SchemaFrom from "./SchemaForm";
+import NumberFiled from "./fields/NumberField";
+import StringField from "./fields/StringField";
+import ArrayField from "./fields/ArrayField";
 
-import SelectionWidget from './widgets/Selection'
+import SelectionWidget from "./widgets/Selection";
 
-import ThemeProvider from './theme'
+import ThemeProvider from "./theme";
 
-export default SchemaFrom
+export default SchemaFrom;
 
-export * from './types'
+export * from "./types";
 
-export { NumberFiled, StringField, ArrayField, SelectionWidget, ThemeProvider }
+export { NumberFiled, StringField, ArrayField, SelectionWidget, ThemeProvider };

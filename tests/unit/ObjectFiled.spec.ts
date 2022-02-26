@@ -1,81 +1,81 @@
-import { mount, shallowMount } from '@vue/test-utils'
-import { defineComponent, h } from 'vue'
+import { mount, shallowMount } from "@vue/test-utils";
+import { defineComponent, h } from "vue";
 
-import JsonSchemaForm, { NumberFiled, StringField } from '../../lib'
+import JsonSchemaForm, { NumberFiled, StringField } from "../../lib";
 
-describe('ObjectFiled', () => {
-  let schema: any
+describe("ObjectFiled", () => {
+  let schema: any;
   beforeEach(() => {
     schema = {
-      type: 'object',
+      type: "object",
       properties: {
         name: {
-          type: 'string',
+          type: "string",
         },
         age: {
-          type: 'number',
+          type: "number",
         },
       },
-    }
-  })
+    };
+  });
 
-  it('should render properties to correct fileds', async () => {
+  it("should render properties to correct fileds", async () => {
     const wrapper = mount(JsonSchemaForm, {
       props: {
         schema,
         value: {},
         onChange: () => {},
       },
-    })
+    });
 
-    const strFiled = wrapper.findComponent(StringField)
-    const numField = wrapper.findComponent(NumberFiled)
+    const strFiled = wrapper.findComponent(StringField);
+    const numField = wrapper.findComponent(NumberFiled);
 
-    expect(strFiled.exists()).toBeTruthy()
-    expect(numField.exists()).toBeTruthy()
-  })
+    expect(strFiled.exists()).toBeTruthy();
+    expect(numField.exists()).toBeTruthy();
+  });
 
-  it('should change value when sub fields trigger onChange', async () => {
-    let value: any = {}
+  it("should change value when sub fields trigger onChange", async () => {
+    let value: any = {};
     const wrapper = mount(JsonSchemaForm, {
       props: {
         schema,
         value: value,
         onChange: (v) => {
-          value = v
+          value = v;
         },
       },
-    })
+    });
 
-    const strFiled = wrapper.findComponent(StringField)
-    const numField = wrapper.findComponent(NumberFiled)
+    const strFiled = wrapper.findComponent(StringField);
+    const numField = wrapper.findComponent(NumberFiled);
 
-    await strFiled.props('onChange')('1')
-    expect(value.name).toEqual('1')
-    await numField.props('onChange')(1)
-    expect(value.age).toEqual(1)
+    await strFiled.props("onChange")("1");
+    expect(value.name).toEqual("1");
+    await numField.props("onChange")(1);
+    expect(value.age).toEqual(1);
     // expect(numField.exists()).toBeTruthy()
-  })
+  });
 
-  it('should render properties to correct fileds', async () => {
+  it("should render properties to correct fileds", async () => {
     let value: any = {
-      name: '123',
-    }
+      name: "123",
+    };
     const wrapper = mount(JsonSchemaForm, {
       props: {
         schema,
         value: value,
         onChange: (v) => {
-          value = v
+          value = v;
         },
       },
-    })
+    });
 
-    const strFiled = wrapper.findComponent(StringField)
+    const strFiled = wrapper.findComponent(StringField);
     // const numField = wrapper.findComponent(NumberFiled)
-    await strFiled.props('onChange')(undefined)
+    await strFiled.props("onChange")(undefined);
 
-    expect(value.name).toBeUndefined()
+    expect(value.name).toBeUndefined();
     // expect(numField.exists()).toBeTruthy()
-  })
-})
+  });
+});

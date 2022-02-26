@@ -1,54 +1,54 @@
-import { defineComponent, PropType, ref, watch, watchEffect } from 'vue'
+import { defineComponent, PropType, ref, watch, watchEffect } from "vue";
 
 export default defineComponent({
-  name: 'SelectionWidget',
+  name: "SelectionWidget",
   props: {
     value: {},
     onChange: {
       type: Function as PropType<(v: any) => void>,
-      required: true,
+      required: true
     },
     options: {
       type: Array as PropType<
         {
-          key: string
-          value: any
+          key: string;
+          value: any;
         }[]
       >,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
-    const currentValueRef = ref(props.value)
+    const currentValueRef = ref(props.value);
 
     watch(currentValueRef, (newv, oldv) => {
       if (newv !== props.value) {
-        props.onChange(newv)
+        props.onChange(newv);
       }
-    })
+    });
 
     watch(
       () => props.value,
-      (v) => {
+      v => {
         if (v !== currentValueRef.value) {
-          currentValueRef.value = v
+          currentValueRef.value = v;
         }
-      },
-    )
+      }
+    );
 
     watchEffect(() => {
-      console.log(currentValueRef.value, '------------->')
-    })
+      console.log(currentValueRef.value, "------------->");
+    });
 
     return () => {
-      const { options } = props
+      const { options } = props;
       return (
         <select multiple={true} v-model={currentValueRef.value}>
-          {options.map((op) => (
+          {options.map(op => (
             <option value={op.value}>{op.key}</option>
           ))}
         </select>
-      )
-    }
-  },
-})
+      );
+    };
+  }
+});

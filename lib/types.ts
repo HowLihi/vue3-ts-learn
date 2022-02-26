@@ -1,53 +1,53 @@
-import { PropType, defineComponent, DefineComponent } from 'vue'
-import { ErrorSchema } from './validator'
+import { PropType, defineComponent, DefineComponent } from "vue";
+import { ErrorSchema } from "./validator";
 
 export enum SchemaTypes {
-  'NUMBER' = 'number',
-  'INTEGER' = 'integer',
-  'STRING' = 'string',
-  'OBJECT' = 'object',
-  'ARRAY' = 'array',
-  'BOOLEAN' = 'boolean',
+  "NUMBER" = "number",
+  "INTEGER" = "integer",
+  "STRING" = "string",
+  "OBJECT" = "object",
+  "ARRAY" = "array",
+  "BOOLEAN" = "boolean",
 }
 
-type SchemaRef = { $ref: string }
+type SchemaRef = { $ref: string };
 
 // type Schema = any
 export interface Schema {
-  type?: SchemaTypes | string
-  const?: any
-  format?: string
+  type?: SchemaTypes | string;
+  const?: any;
+  format?: string;
 
-  title?: string
-  default?: any
+  title?: string;
+  default?: any;
 
   properties?: {
-    [key: string]: Schema
-  }
-  items?: Schema | Schema[] | SchemaRef
-  uniqueItems?: any
+    [key: string]: Schema;
+  };
+  items?: Schema | Schema[] | SchemaRef;
+  uniqueItems?: any;
   dependencies?: {
-    [key: string]: string[] | Schema | SchemaRef
-  }
-  oneOf?: Schema[]
-  anyOf?: Schema[]
-  allOf?: Schema[]
+    [key: string]: string[] | Schema | SchemaRef;
+  };
+  oneOf?: Schema[];
+  anyOf?: Schema[];
+  allOf?: Schema[];
   // TODO: uiSchema
   // vjsf?: VueJsonSchemaConfig
-  required?: string[]
-  enum?: any[]
-  enumNames?: any[]
-  enumKeyValue?: any[]
-  additionalProperties?: any
-  additionalItems?: Schema
+  required?: string[];
+  enum?: any[];
+  enumNames?: any[];
+  enumKeyValue?: any[];
+  additionalProperties?: any;
+  additionalItems?: Schema;
 
-  minLength?: number
-  maxLength?: number
-  minimun?: number
-  maximum?: number
-  multipleOf?: number
-  exclusiveMaximum?: number
-  exclusiveMinimum?: number
+  minLength?: number;
+  maxLength?: number;
+  minimun?: number;
+  maximum?: number;
+  multipleOf?: number;
+  exclusiveMaximum?: number;
+  exclusiveMinimum?: number;
 }
 
 export const FiledPropsDefine = {
@@ -70,13 +70,13 @@ export const FiledPropsDefine = {
     type: Object as PropType<ErrorSchema>,
     required: true,
   },
-} as const
+} as const;
 
 export const TypeHelperComponent = defineComponent({
   props: FiledPropsDefine,
-})
+});
 
-export type CommonFieldType = typeof TypeHelperComponent
+export type CommonFieldType = typeof TypeHelperComponent;
 
 export const CommonWidgetPropsDefine = {
   value: {},
@@ -91,46 +91,46 @@ export const CommonWidgetPropsDefine = {
     type: Object as PropType<Schema>,
     required: true,
   },
-} as const
+} as const;
 
 export const SelectionWidgetPropsDefine = {
   ...CommonWidgetPropsDefine,
   options: {
     type: Array as PropType<
       {
-        key: string
-        value: any
+        key: string;
+        value: any;
       }[]
     >,
     required: true,
   },
-} as const
+} as const;
 
 export type CommonWidgetDefine = DefineComponent<
   typeof CommonWidgetPropsDefine,
   {},
   {}
->
+>;
 
 export type SelectionWidgetDefine = DefineComponent<
   typeof SelectionWidgetPropsDefine,
   {},
   {}
->
+>;
 
 export enum SelectionWidgetNames {
-  SelectionWidget = 'SelectionWidget',
+  SelectionWidget = "SelectionWidget",
 }
 
 export enum CommonWidgetNames {
-  TextWidget = 'TextWidget',
-  NumberWidget = 'NumberWidget',
+  TextWidget = "TextWidget",
+  NumberWidget = "NumberWidget",
 }
 
 export interface Theme {
   widgets: {
-    [SelectionWidgetNames.SelectionWidget]: SelectionWidgetDefine
-    [CommonWidgetNames.TextWidget]: CommonWidgetDefine
-    [CommonWidgetNames.NumberWidget]: CommonWidgetDefine
-  }
+    [SelectionWidgetNames.SelectionWidget]: SelectionWidgetDefine;
+    [CommonWidgetNames.TextWidget]: CommonWidgetDefine;
+    [CommonWidgetNames.NumberWidget]: CommonWidgetDefine;
+  };
 }

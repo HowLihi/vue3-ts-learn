@@ -1,81 +1,81 @@
 export default {
-  name: 'Simple',
+  name: "Simple",
   schema: {
-    description: 'A simple form example.',
-    type: 'object',
-    required: ['firstName', 'lastName'],
+    description: "A simple form example.",
+    type: "object",
+    required: ["firstName", "lastName"],
     properties: {
       firstName: {
-        title: 'firstName',
-        type: 'string',
-        default: 'Chuck',
+        title: "firstName",
+        type: "string",
+        default: "Chuck"
       },
       lastName: {
-        title: 'lastName',
-        type: 'string',
+        title: "lastName",
+        type: "string"
       },
       telephone: {
-        title: 'telephone',
-        type: 'string',
-        minLength: 10,
+        title: "telephone",
+        type: "string",
+        minLength: 10
       },
       staticArray: {
-        title: 'staticArray',
-        type: 'array',
+        title: "staticArray",
+        type: "array",
         items: [
           {
-            type: 'string',
+            type: "string"
           },
           {
-            type: 'number',
-          },
-        ],
+            type: "number"
+          }
+        ]
       },
       singleTypeArray: {
-        title: 'singleTypeArray',
-        type: 'array',
+        title: "singleTypeArray",
+        type: "array",
         items: {
-          type: 'object',
+          type: "object",
           properties: {
             name: {
-              type: 'string',
+              type: "string"
             },
             age: {
-              type: 'number',
-            },
-          },
-        },
+              type: "number"
+            }
+          }
+        }
       },
       multiSelectArray: {
-        title: 'multiSelectArray',
-        type: 'array',
+        title: "multiSelectArray",
+        type: "array",
         items: {
-          type: 'string',
-          enum: ['123', '456', '789'],
-        },
-      },
-    },
+          type: "string",
+          enum: ["123", "456", "789"]
+        }
+      }
+    }
   },
   uiSchema: {
-    title: 'A registration form',
+    title: "A registration form",
     properties: {
       firstName: {
-        title: 'First name',
+        title: "First name"
       },
       lastName: {
-        title: 'Last name',
+        title: "Last name"
       },
       telephone: {
-        title: 'Telephone',
-      },
-    },
+        title: "Telephone"
+      }
+    }
   },
   default: {
-    firstName: 'Chuck',
-    lastName: 'Norris',
+    firstName: "Chuck",
+    lastName: "Norris",
     age: 75,
-    bio: 'Roundhouse kicking asses since 1940',
-    password: 'noneed',
-    singleTypeArray: [{ name: 'jokcy', age: 12 }],
-  },
-}
+    bio: "Roundhouse kicking asses since 1940",
+    password: "noneed",
+    singleTypeArray: [{ name: "jokcy", age: 12 }]
+  }
+};

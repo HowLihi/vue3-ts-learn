@@ -1,6 +1,6 @@
-import { defineComponent, PropType } from 'vue'
-import JsonSchemaForm, { Schema, ThemeProvider } from '../../../lib'
-import defaultTheme from '../../../lib/theme-default'
+import { defineComponent, PropType } from "vue";
+import JsonSchemaForm, { Schema, ThemeProvider } from "../../../lib";
+import defaultTheme from "../../../lib/theme-default";
 
 // vjsf-theme-default // import {ThemeProvider} from 'vue3-jsonschema-form'
 // vue3-jsonschema-form
@@ -11,12 +11,12 @@ export const ThemeDefaultProvider = defineComponent({
       <ThemeProvider theme={defaultTheme}>
         {slots.default && slots.default()}
       </ThemeProvider>
-    )
+    );
   },
-})
+});
 
 export default defineComponent({
-  name: 'TestComponent',
+  name: "TestComponent",
   props: {
     schema: {
       type: Object as PropType<Schema>,
@@ -35,6 +35,6 @@ export default defineComponent({
       <ThemeDefaultProvider>
         <JsonSchemaForm {...props} />
       </ThemeDefaultProvider>
-    )
+    );
   },
-})
+});

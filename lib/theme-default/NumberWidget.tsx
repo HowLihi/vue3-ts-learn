@@ -1,17 +1,17 @@
-import { CommonWidgetPropsDefine, CommonWidgetDefine } from '../types'
-import { defineComponent } from 'vue'
+import { CommonWidgetPropsDefine, CommonWidgetDefine } from "../types";
+import { defineComponent } from "vue";
 
-import { withFormItem } from './FormItem'
+import { withFormItem } from "./FormItem";
 
 const NumberWidget: CommonWidgetDefine = withFormItem(
   defineComponent({
     props: CommonWidgetPropsDefine,
     setup(props) {
       const handleChange = (e: any) => {
-        const value = e.target.value
-        e.target.value = props.value
-        props.onChange(value)
-      }
+        const value = e.target.value;
+        e.target.value = props.value;
+        props.onChange(value);
+      };
       return () => {
         return (
           <input
@@ -19,10 +19,10 @@ const NumberWidget: CommonWidgetDefine = withFormItem(
             value={props.value as any}
             onInput={handleChange}
           />
-        )
-      }
-    },
-  }),
-)
+        );
+      };
+    }
+  })
+);
 
-export default NumberWidget
+export default NumberWidget;

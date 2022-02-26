@@ -1,5 +1,5 @@
-import { createApp, defineComponent, h, reactive, ref } from 'vue'
+import { createApp } from "vue";
 // import App from './App.vue'
-import App from './App'
+import App from "./App";
 
-createApp(App).mount('#app')
+createApp(App).mount("#app");

@@ -1,7 +1,7 @@
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
-const CircularDependencyPlugin = require('circular-dependency-plugin')
+const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
+const CircularDependencyPlugin = require("circular-dependency-plugin");
 
-const isLib = process.env.TYPE === 'lib'
+const isLib = process.env.TYPE === "lib";
 
 module.exports = {
   configureWebpack(config) {
@@ -9,9 +9,9 @@ module.exports = {
   },
   chainWebpack(config) {
     if (!isLib) {
-      config.plugin('monaco').use(new MonacoWebpackPlugin())
+      config.plugin("monaco").use(new MonacoWebpackPlugin());
     }
-    config.plugin('circular').use(new CircularDependencyPlugin())
+    config.plugin("circular").use(new CircularDependencyPlugin());
   },
   pwa: {},
-}
+};

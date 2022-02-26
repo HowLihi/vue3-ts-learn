@@ -1,17 +1,10 @@
-import SelectionWidget from './SelectionWidget'
+import SelectionWidget from "./SelectionWidget";
 
-import { CommonWidgetPropsDefine, CommonWidgetDefine } from '../types'
-import { defineComponent } from 'vue'
+import { CommonWidgetPropsDefine, CommonWidgetDefine } from "../types";
+import { defineComponent } from "vue";
 
-import TextWidget from './TextWidget'
-import NumberWidget from './NumberWidget'
-
-const CommonWidget: CommonWidgetDefine = defineComponent({
-  props: CommonWidgetPropsDefine,
-  setup() {
-    return () => null
-  },
-})
+import TextWidget from "./TextWidget";
+import NumberWidget from "./NumberWidget";
 
 export default {
   widgets: {
@@ -19,4 +12,4 @@ export default {
     TextWidget,
     NumberWidget,
   },
-}
+};
