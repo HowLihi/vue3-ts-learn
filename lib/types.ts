@@ -1,4 +1,6 @@
-import { defineComponent, DefineComponent, PropType } from 'vue'
+import { PropType, defineComponent, DefineComponent } from 'vue'
+import { ErrorSchema } from './validator'
+
 export enum SchemaTypes {
   'NUMBER' = 'number',
   'INTEGER' = 'integer',
@@ -10,24 +12,42 @@ export enum SchemaTypes {
 
 type SchemaRef = { $ref: string }
 
+// type Schema = any
 export interface Schema {
-  type: SchemaTypes | string
+  type?: SchemaTypes | string
   const?: any
   format?: string
+
+  title?: string
   default?: any
+
   properties?: {
-    [key: string]: Schema | { $ref: string }
+    [key: string]: Schema
   }
   items?: Schema | Schema[] | SchemaRef
+  uniqueItems?: any
   dependencies?: {
     [key: string]: string[] | Schema | SchemaRef
   }
   oneOf?: Schema[]
+  anyOf?: Schema[]
+  allOf?: Schema[]
+  // TODO: uiSchema
+  // vjsf?: VueJsonSchemaConfig
   required?: string[]
   enum?: any[]
+  enumNames?: any[]
   enumKeyValue?: any[]
   additionalProperties?: any
   additionalItems?: Schema
+
+  minLength?: number
+  maxLength?: number
+  minimun?: number
+  maximum?: number
+  multipleOf?: number
+  exclusiveMaximum?: number
+  exclusiveMinimum?: number
 }
 
 export const FiledPropsDefine = {
@@ -44,7 +64,11 @@ export const FiledPropsDefine = {
   },
   rootSchema: {
     type: Object as PropType<Schema>,
-    require: true,
+    required: true,
+  },
+  errorSchema: {
+    type: Object as PropType<ErrorSchema>,
+    required: true,
   },
 } as const
 
@@ -52,21 +76,33 @@ export const TypeHelperComponent = defineComponent({
   props: FiledPropsDefine,
 })
 
-export const CommonFieldType = typeof TypeHelperComponent
+export type CommonFieldType = typeof TypeHelperComponent
 
 export const CommonWidgetPropsDefine = {
   value: {},
   onChange: {
     type: Function as PropType<(v: any) => void>,
-    require: true,
+    required: true,
+  },
+  errors: {
+    type: Array as PropType<string[]>,
+  },
+  schema: {
+    type: Object as PropType<Schema>,
+    required: true,
   },
 } as const
 
 export const SelectionWidgetPropsDefine = {
   ...CommonWidgetPropsDefine,
   options: {
-    type: Array as PropType<{ key: string; value: any }[]>,
-    require: true,
+    type: Array as PropType<
+      {
+        key: string
+        value: any
+      }[]
+    >,
+    required: true,
   },
 } as const
 

@@ -4,44 +4,54 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build:core": "TYPE=lib vue-cli-service build --target lib --name index --no-clean lib/index.ts",
+    "build:theme": "TYPE=lib vue-cli-service build --target lib --name theme-default/index --no-clean lib/theme-default/index.tsx",
+    "build": "rimraf dist && npm run build:core && npm run build:theme",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "ajv": "^8.9.0",
+    "ajv": "^6.12.4",
+    "ajv-errors": "^1.0.1",
+    "ajv-i18n": "^3.5.0",
     "core-js": "^3.6.5",
-    "json-schema-merge-allof": "^0.8.1",
-    "jsonpointer": "^5.0.0",
-    "jss": "^10.9.0",
-    "jss-preset-default": "^10.9.0",
-    "lodash": "^4.17.21",
+    "json-schema-merge-allof": "^0.7.0",
+    "jsonpointer": "^4.1.0",
+    "jss": "^10.4.0",
+    "jss-preset-default": "^10.4.0",
+    "lodash.topath": "^4.5.2",
+    "lodash.union": "^4.6.0",
     "vue": "^3.0.0",
-    "vue-jss": "0.0.4",
-    "vue-loader": "^15.9.8"
+    "vue-jss": "^0.0.4"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "@vue/babel-plugin-jsx": "^1.1.1",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-plugin-unit-jest": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
+    "@types/json-schema-merge-allof": "^0.6.0",
+    "@types/lodash.topath": "^4.5.6",
+    "@types/lodash.union": "^4.6.6",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@vue/babel-plugin-jsx": "^1.0.0-rc.3",
+    "@vue/cli-plugin-babel": "~4.5.6",
+    "@vue/cli-plugin-eslint": "~4.5.6",
+    "@vue/cli-plugin-typescript": "~4.5.6",
+    "@vue/cli-plugin-unit-jest": "~4.5.6",
+    "@vue/cli-service": "~4.5.6",
+    "@vue/compiler-sfc": "^3.0.0-0",
     "@vue/eslint-config-prettier": "^6.0.0",
-    "@vue/eslint-config-typescript": "^7.0.0",
-    "@vue/test-utils": "^2.0.0-0",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "@vue/test-utils": "2.0.0-beta.5",
+    "circular-dependency-plugin": "^5.2.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-vue": "^7.0.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-vue": "^7.0.0-0",
     "lint-staged": "^9.5.0",
-    "monaco-editor": "^0.31.1",
-    "prettier": "^2.2.1",
-    "typescript": "~4.1.5",
-    "vue-jest": "^5.0.0-0"
+    "monaco-editor": "^0.20.0",
+    "monaco-editor-webpack-plugin": "^1.9.1",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
+    "typescript": "~3.9.3",
+    "vue-jest": "^5.0.0-alpha.4"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -51,13 +61,5 @@
       "vue-cli-service lint",
       "git add"
     ]
-  },
-  "eslintConfig": {
-    "plugins": [
-      "example"
-    ],
-    "env": {
-      "example/custom": true
-    }
   }
 }

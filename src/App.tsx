@@ -1,23 +1,17 @@
-import {
-  createApp,
-  defineComponent,
-  h,
-  createVNode,
-  reactive,
-  ref,
-  Ref,
-  watchEffect,
-} from 'vue'
-// const img = require('./assets/logo.png') // eslint-disable-line
-import MonacoEditor from './components/MonacoEditor'
-import demos from './demos'
-import SchemaForm from '../lib'
+import { defineComponent, ref, Ref, reactive, watchEffect } from 'vue'
 import { createUseStyles } from 'vue-jss'
-// function renderHelloWorld(num: number) {
-//   return <HelloWorld age={num}></HelloWorld>
-// }
+
+import MonacoEditor from './components/MonacoEditor'
+
+import demos from './demos'
+
+import SchemaForm, { ThemeProvider } from '../lib'
+import themeDefault from '../lib/theme-default'
+
+// TODO: 在lib中export
 type Schema = any
 type UISchema = any
+
 function toJson(data: any) {
   return JSON.stringify(data, null, 2)
 }
@@ -59,7 +53,7 @@ const useStyles = createUseStyles({
     appearance: 'none',
     borderWidth: 0,
     backgroundColor: 'transparent',
-    curser: 'pointor',
+    cursor: 'pointer',
     display: 'inline-block',
     padding: 15,
     borderRadius: 5,
@@ -75,9 +69,11 @@ const useStyles = createUseStyles({
     },
   },
 })
+
 export default defineComponent({
   setup() {
     const selectedRef: Ref<number> = ref(0)
+
     const demo: {
       schema: Schema | null
       data: any
@@ -85,6 +81,7 @@ export default defineComponent({
       schemaCode: string
       dataCode: string
       uiSchemaCode: string
+      customValidate: ((d: any, e: any) => void) | undefined
     } = reactive({
       schema: null,
       data: {},
@@ -92,24 +89,30 @@ export default defineComponent({
       schemaCode: '',
       dataCode: '',
       uiSchemaCode: '',
+      customValidate: undefined,
     })
+
     watchEffect(() => {
       const index = selectedRef.value
-      const d = demos[index]
+      const d: any = demos[index]
       demo.schema = d.schema
       demo.data = d.default
       demo.uiSchema = d.uiSchema
       demo.schemaCode = toJson(d.schema)
       demo.dataCode = toJson(d.default)
       demo.uiSchemaCode = toJson(d.uiSchema)
+      demo.customValidate = d.customValidate
     })
+
     const methodRef: Ref<any> = ref()
+
     const classesRef = useStyles()
+
     const handleChange = (v: any) => {
       demo.data = v
       demo.dataCode = toJson(v)
     }
-    // const schemaRef: Ref<any> = ref(schema)
+
     function handleCodeChange(
       filed: 'schema' | 'data' | 'uiSchema',
       value: string,
@@ -118,17 +121,27 @@ export default defineComponent({
         const json = JSON.parse(value)
         demo[filed] = json
         ;(demo as any)[`${filed}Code`] = value
-      } catch (err) {}
+      } catch (err) {
+        // some thing
+      }
     }
 
     const handleSchemaChange = (v: string) => handleCodeChange('schema', v)
     const handleDataChange = (v: string) => handleCodeChange('data', v)
     const handleUISchemaChange = (v: string) => handleCodeChange('uiSchema', v)
+
+    const contextRef = ref()
+    const nameRef = ref()
+
     return () => {
       const classes = classesRef.value
       const selected = selectedRef.value
 
+      console.log(methodRef, nameRef)
+
       return (
+        // <StyleThemeProvider>
+        // <VJSFThemeProvider theme={theme as any}>
         <div class={classes.container}>
           <div class={classes.menu}>
             <h1>Vue3 JsonSchema Form</h1>
@@ -153,31 +166,50 @@ export default defineComponent({
                 class={classes.codePanel}
                 onChange={handleSchemaChange}
                 title="Schema"
-              ></MonacoEditor>
+              />
               <div class={classes.uiAndValue}>
                 <MonacoEditor
-                  code={demo.uiSchema}
+                  code={demo.uiSchemaCode}
                   class={classes.codePanel}
                   onChange={handleUISchemaChange}
-                  title="UIShema"
-                ></MonacoEditor>
+                  title="UISchema"
+                />
                 <MonacoEditor
                   code={demo.dataCode}
                   class={classes.codePanel}
                   onChange={handleDataChange}
                   title="Value"
-                ></MonacoEditor>
+                />
               </div>
             </div>
             <div class={classes.form}>
-              <SchemaForm
-                schema={demo.schema}
+              <ThemeProvider theme={themeDefault}>
+                <SchemaForm
+                  schema={demo.schema}
+                  onChange={handleChange}
+                  value={demo.data}
+                  contextRef={contextRef}
+                  ref={nameRef}
+                  customValidate={demo.customValidate}
+                />
+              </ThemeProvider>
+              {/* <SchemaForm
+                schema={demo.schema!}
+                uiSchema={demo.uiSchema!}
                 onChange={handleChange}
+                contextRef={methodRef}
                 value={demo.data}
-              />
+              /> */}
+              <button
+                onClick={() => console.log(contextRef.value.doValidate())}
+              >
+                校 验
+              </button>
             </div>
           </div>
         </div>
+        // </VJSFThemeProvider>
+        // </StyleThemeProvider>
       )
     }
   },

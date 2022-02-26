@@ -1,10 +1,18 @@
+// Node.js require:
 const Ajv = require('ajv')
+const localize = require('ajv-i18n')
 
 const schema = {
   type: 'object',
   properties: {
     name: {
       type: 'string',
+      // test: false,
+      errorMessage: {
+        type: '必须是字符串',
+        minLength: '长度不能小于10',
+      },
+      // format: 'test',
       minLength: 10,
     },
     age: {
@@ -12,9 +20,15 @@ const schema = {
     },
     pets: {
       type: 'array',
-      items: {
-        type: 'string',
-      },
+      items: [
+        {
+          type: 'string',
+          maxLength: 2,
+        },
+        {
+          type: 'number',
+        },
+      ],
     },
     isWorker: {
       type: 'boolean',
@@ -22,18 +36,51 @@ const schema = {
   },
   required: ['name', 'age'],
 }
-const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
+
+const ajv = new Ajv({ allErrors: true, jsonPointers: true }) // options can be passed, e.g. {allErrors: true}
+// ajv.addFormat('test', (data) => {
+//   console.log(data, '------------')
+//   return data === 'haha'
+// })
+require('ajv-errors')(ajv)
 ajv.addKeyword('test', {
-  validate(schema, data) {
-    if (schema === true) return true
-    else return schema.length === 6
+  macro() {
+    return {
+      minLength: 10,
+    }
   },
+  // compile(sch, parentSchema) {
+  //   console.log(sch, parentSchema)
+  //   // return true
+  //   return () => true
+  // },
+  // metaSchema: {
+  //   type: 'boolean',
+  // },
+  // validate: function fun(schema, data) {
+  //   // console.log(schema, data)
+
+  //   fun.errors = [
+  //     {
+  //       keyword: 'test',
+  //       dataPath: '.name',
+  //       schemaPath: '#/properties/name/test',
+  //       params: { keyword: 'test' },
+  //       message: 'hello error message',
+  //     },
+  //   ]
+
+  //   return false
+  // },
 })
 const validate = ajv.compile(schema)
 const valid = validate({
-  name: 'kocky',
-  age: 38,
+  name: '12',
+  age: 18,
+  pets: ['mimi', 12],
   isWorker: true,
-  pets: ['mimi', 'mama'],
 })
-if (!valid) console.log(validate.errors)
+if (!valid) {
+  localize.zh(validate.errors)
+  console.log(validate.errors)
+}
